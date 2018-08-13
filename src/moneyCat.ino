@@ -13,17 +13,13 @@ void setup()
   Particle.function("SmileWave", SmileWave) ;
 }
 
-void loop()
-{
-}
-
 int SmileWave(String message) {
   digitalWrite(LED, HIGH) ;
   Wave(message) ;
   digitalWrite(LED, LOW) ;
 }
 
-// LED FUNCTIONS
+// LED FUNCTION
 int ToggleLED(String message) {
   if (message == "0") {
     digitalWrite(LED, LOW);
@@ -38,25 +34,21 @@ int Wave(String message) {
   int i;
   int numberOfWaves = message.toInt();
   for (i = 0; i < numberOfWaves; i++) {
-    extendArm();
-    retractArm();
+    moveArmForward();
+    moveArmBackward();
   }
 }
-
-void extendArm() {
-  int pos = 0;
-  for(pos = 0; pos < 180; pos += 5)  // goes from 0 degrees to 180 degrees
-  {                                  // in steps of 1 degree
-    catArm.write(pos);              // tell servo to go to position in variable 'pos'
-    delay(25);                       // waits 15ms for the servo to reach the position
+void moveArmForward() {
+  int pos;
+  for(pos = 0; pos <= 120; pos += 5) {
+    catArm.write(pos);
+    delay(20);
   }
 }
-
-void retractArm() {
-  int pos = 0;
-  for(pos = 180; pos>=1; pos-= 5)     // goes from 180 degrees to 0 degrees
-  {
-    catArm.write(pos);              // tell servo to go to position in variable 'pos'
-    delay(25);                       // waits 15ms for the servo to reach the position
+void moveArmBackward() {
+  int pos;
+  for(pos = 120; pos >= 0; pos -= 5) {
+    catArm.write(pos);
+    delay(20);
   }
 }
